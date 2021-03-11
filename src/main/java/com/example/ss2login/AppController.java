@@ -2,7 +2,6 @@ package com.example.ss2login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AppController {
@@ -12,7 +11,7 @@ public class AppController {
         return "admin/login";
     }
 
-    @PostMapping("/admin/home")
+    @GetMapping("/admin/home")
     public String adminHomePage() {
         return "admin/home";
     }
@@ -22,7 +21,7 @@ public class AppController {
         return "user/login";
     }
 
-    @PostMapping("/user/home")
+    @GetMapping("/user/home")
     public String userHomePage() {
         return "user/home";
     }
