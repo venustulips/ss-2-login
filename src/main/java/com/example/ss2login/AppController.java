@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AppController {
 
-    @GetMapping(value = {"/admin-login", "/"})
+    @GetMapping(value = {"/admin/login", "/"})
     public String adminLoginPage() {
         return "admin/login";
     }
@@ -17,7 +17,7 @@ public class AppController {
         return "admin/home";
     }
 
-    @GetMapping("/user-login")
+    @GetMapping("/user/login")
     public String userLoginPage() {
         return "user/login";
     }

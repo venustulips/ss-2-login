@@ -27,14 +27,15 @@ public class SecurityConfiguration {
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
             .and()
                 .formLogin()
-                .loginPage("/admin-login")
-                .loginProcessingUrl("/admin-login")
-                .failureUrl("/admin-login?error")
+                .loginPage("/admin/login")
+                .loginProcessingUrl("/admin/login")
+                .failureUrl("/admin/login?error")
                 .defaultSuccessUrl("/admin/home")
+                .permitAll()
             .and()
                 .logout()
-                .logoutUrl("/admin-logout")
-                .logoutSuccessUrl("/admin-login?logout")
+                .logoutUrl("/admin/logout")
+                .logoutSuccessUrl("/admin/login?logout")
                 .permitAll()
             .and()
                 .csrf().disable();
@@ -42,32 +43,33 @@ public class SecurityConfiguration {
         }
     }
 
-    @Configuration
-    @Order(2)
-    public static class UserSecurityConfiguration extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(final HttpSecurity http) throws Exception {
-            // @formatter:off
-            http
-                .antMatcher("/user/home/**")
-                .authorizeRequests()
-                .antMatchers("/user/home/**").hasAuthority("ROLE_USER")
-                .anyRequest().authenticated()
-            .and()
-                .formLogin()
-                .loginPage("/user-login")
-                .loginProcessingUrl("/user-login")
-                .failureUrl("/user-login?error")
-                .defaultSuccessUrl("/user/home")
-            .and()
-                .logout()
-                .logoutUrl("/user-logout")
-                .logoutSuccessUrl("/user-login?logout")
-            .and()
-                .csrf().disable();
-            // @formatter:on
-        }
-    }
+//    @Configuration
+//    @Order(2)
+//    public static class UserSecurityConfiguration extends WebSecurityConfigurerAdapter {
+//        @Override
+//        protected void configure(final HttpSecurity http) throws Exception {
+//            // @formatter:off
+//            http
+//                .antMatcher("/user/**")
+//                .authorizeRequests()
+//                .antMatchers("/user/**").hasAuthority("ROLE_USER")
+//                .anyRequest().authenticated()
+//            .and()
+//                .formLogin()
+//                .loginPage("/user/login")
+//                .loginProcessingUrl("/user/login")
+//                .failureUrl("/user/login?error")
+//                .defaultSuccessUrl("/user/home")
+//                .permitAll()
+//            .and()
+//                .logout()
+//                .logoutUrl("/user/logout")
+//                .logoutSuccessUrl("/user/login?logout")
+//            .and()
+//                .csrf().disable();
+//            // @formatter:on
+//        }
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
