@@ -10,6 +10,9 @@
 <div>
     Authenticated as: <span th:text="${#authentication.name}"></span>
 </div>
+<div>
+    Roles: <span th:text="${#authentication.authorities}"></span>
+</div>
 <form th:action="@{/user/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>

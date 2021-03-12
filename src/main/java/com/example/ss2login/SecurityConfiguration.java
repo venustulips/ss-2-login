@@ -28,6 +28,7 @@ public class SecurityConfiguration {
             .and()
                 .formLogin()
                 .loginPage("/admin/login")
+                .loginProcessingUrl("/admin/login")
                 .failureUrl("/admin/login?error")
                 .defaultSuccessUrl("/admin/home", true)
                 .permitAll()
@@ -52,13 +53,13 @@ public class SecurityConfiguration {
                 .antMatcher("/user/**")
                 .authorizeRequests()
                 .antMatchers("/user/**").hasAuthority("ROLE_USER")
-                .anyRequest().denyAll()
             .and()
                 .formLogin()
                 .loginPage("/user/login")
-                    .permitAll()
+                .loginProcessingUrl("/user/login")
                 .failureUrl("/user/login?error")
                 .defaultSuccessUrl("/user/home", true)
+                .permitAll()
             .and()
                 .logout()
                 .logoutUrl("/user/logout")
@@ -66,6 +67,19 @@ public class SecurityConfiguration {
             .and()
                 .csrf().disable();
             // @formatter:on
+        }
+    }
+
+    @Configuration
+    @Order(3)
+    public static class CommonSecurityConfiguration extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(final HttpSecurity http) throws Exception {
+            http
+                .authorizeRequests()
+                .anyRequest().permitAll()
+            .and()
+                .csrf().disable();
         }
     }
 
@@ -79,7 +93,7 @@ public class SecurityConfiguration {
         User.UserBuilder users = User.builder();
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(users.username("user").password(passwordEncoder().encode("user")).roles("USER").build());
-        manager.createUser(users.username("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build());
+        manager.createUser(users.username("admin").password(passwordEncoder().encode("admin")).roles("ADMIN").build());
         return manager;
     }
 }
